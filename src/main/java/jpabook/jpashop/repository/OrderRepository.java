@@ -2,7 +2,6 @@ package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -28,7 +27,11 @@ public class OrderRepository {
     }
 
     public List<Order> findAll(){
-        return em.createQuery("select o From Order o join o.member m", Order.class)
+
+        String jpql = "select o From Order o join o.member m";
+
+        return em.createQuery(jpql, Order.class)
+                .setMaxResults(1000) //최대 1000건
                 .getResultList();
     }
 
