@@ -27,6 +27,11 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findAll(){
+        return em.createQuery("select o From Order o join o.member m", Order.class)
+                .getResultList();
+    }
+
     public List<Order> findAllByString(OrderSearch orderSearch) {
         //language=JPQL
         String jpql = "select o From Order o join o.member m";
@@ -93,6 +98,26 @@ public class OrderRepository {
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대 1000건
         return query.getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit){
+        return em.createQuery(
+                "select o from Order o"+
+                        " join fetch o.member m"+
+                        " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithItem(){
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi"+
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
     }
 
 }
