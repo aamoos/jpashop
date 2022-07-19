@@ -9,7 +9,7 @@
 >> ### InteliJ
 >> ### JDK 11
 
-![image](https://user-images.githubusercontent.com/37327676/179662375-21a74a5e-7ae0-448b-b846-885dc0b3ac56.png)
+![image](https://user-images.githubusercontent.com/37327676/179764109-a73bbc2c-6112-4eec-8221-eb96d8aa6b97.png)
 
 ![image](https://user-images.githubusercontent.com/37327676/179662391-dac83f9b-36c7-4985-9a35-1187429bf9b9.png)
 
