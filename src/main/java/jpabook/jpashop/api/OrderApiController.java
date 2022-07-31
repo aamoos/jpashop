@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
@@ -67,7 +68,8 @@ public class OrderApiController {
 
     @GetMapping("/apo/v1/orders")
     public List<Order> ordersV1(){
-        List<Order> all = orderRepository.findAll();
+        OrderSearch orderSearch = new OrderSearch();
+        List<Order> all = orderRepository.findAll(orderSearch);
 
         for (Order order : all) {
             order.getMember().getName(); //Lazy 강제 초기화
@@ -81,7 +83,8 @@ public class OrderApiController {
 
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2(){
-        List<Order> orders = orderRepository.findAll();
+        OrderSearch orderSearch = new OrderSearch();
+        List<Order> orders = orderRepository.findAll(orderSearch);
         List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(toList());

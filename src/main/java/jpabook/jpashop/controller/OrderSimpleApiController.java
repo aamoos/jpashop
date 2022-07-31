@@ -9,6 +9,7 @@ import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
@@ -59,7 +60,8 @@ public class OrderSimpleApiController {
      */
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> orderV2(){
-        List<Order> orders = orderRepository.findAll();
+        OrderSearch orderSearch = new OrderSearch();
+        List<Order> orders = orderRepository.findAll(orderSearch);
         List<SimpleOrderDto> result = orders.stream()
                 .map(o -> new SimpleOrderDto(o))
                 .collect(Collectors.toList());
